@@ -144,7 +144,7 @@ function renderItems() {
     taskTitle.addEventListener("click", ()=>{
       ToggleSingleTaskModal();
       const container = document.getElementsByClassName("container")[0];
-      container.style.display = "none";
+      // container.style.display = "none";
       taskTitle.style.color="red";
       // singleTaskIndex = taskTitle.parentElement.id.innerText = Todos[singleTaskIndex].name;
       singleTaskIndex = taskTitle.parentElement.id;
