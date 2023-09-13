@@ -1,53 +1,47 @@
 const clickable = document.getElementById("add-option");
-clickable.addEventListener("click",ToggleModal);
+clickable.addEventListener("click", ToggleModal);
 
 var boxIndex = -1;
 var singleTaskIndex = -1;
 
 
-Todos=[];
+Todos = [];
 
 // Todos is an Array that will store all Tasks.
 
 renderItems();
 
-function ToggleModal() {  
+function ToggleModal() {
   console.log("here");
- 
   const modal = document.getElementById("modal");
   console.log(modal.style.display);
-  if (modal.style.display == "block") 
-  {
+  if (modal.style.display == "block") {
     modal.style.display = "none";
-  } 
-  else 
-  {
+  }
+  else {
     modal.style.display = "block";
   }
-  
+
   const taskInput = document.getElementById("task-Input");
   taskInput.value = "";
   taskInput.focus();
 }
 
 function ToggleSingleTaskModal() {
-
   const modal = document.getElementById("single-task-modal");
-  modal.style.backgroundColor="cyan";
+  modal.style.backgroundColor = "cyan";
   // console.log(modal.style.display);
-  const singleTaskContainer=document.getElementById("singleTaskCard");
-  singleTaskContainer.innerHTML="";
-  if (modal.style.display === "block") 
-  {
+  const singleTaskContainer = document.getElementById("singleTaskCard");
+  singleTaskContainer.innerHTML = "";
+  if (modal.style.display === "block") {
     modal.style.display = "none";
   }
-  else
-   {
+  else {
     modal.style.display = "block";
   }
-      const container = document.getElementsByClassName("container")[0];
-      container.style.display = "block";
-      renderItems();
+  const container = document.getElementsByClassName("container")[0];
+  container.style.display = "block";
+  renderItems();
   // taskInput.focus();
 }
 
@@ -58,29 +52,27 @@ function ToggleItemModal() {
   const itemInput2 = document.getElementById("item-input");
   itemInput2.value = "";
   // console.log(modal.style.display);
-  if (modal.style.display === "block") 
-  {
+  if (modal.style.display === "block") {
     modal.style.display = "none";
-  } 
-  else 
-  {
+  }
+  else {
     modal.style.display = "block";
   }
   itemInput2.focus();
 }
 
-function renderSingleItem(){
-  const modal=document.getElementById("single-task-modal");
-  const singleTaskContainer=document.getElementById("singleTaskCard");
-  singleTaskContainer.innerHTML="";
+function renderSingleItem() {
+  const modal = document.getElementById("single-task-modal");
+  const singleTaskContainer = document.getElementById("singleTaskCard");
+  singleTaskContainer.innerHTML = "";
 
   // singleTaskContainer.style.width="300px";
-  singleTaskContainer.style.display="flex";
-  singleTaskContainer.style.justifyContent="center";
+  singleTaskContainer.style.display = "flex";
+  singleTaskContainer.style.justifyContent = "center";
 
-  const singleTask=document.getElementsByClassName("taskCard")[singleTaskIndex];
+  const singleTask = document.getElementsByClassName("taskCard")[singleTaskIndex];
   // const itemInput = document.getElementById("item-input");
-  console.log(singleTask,"index : ",singleTaskIndex);
+  console.log(singleTask, "index : ", singleTaskIndex);
   singleTaskContainer.appendChild(singleTask);
 }
 
@@ -104,7 +96,8 @@ function addTask() {
   Todos.push(newObj);
   renderItems();
   ToggleModal();
-
+  const seen = document.getElementById("seen");
+  seen.style.display = "none";
 }
 
 function addItem() {
@@ -113,10 +106,9 @@ function addItem() {
   console.log("Item input given : ", itemInput.value);
   const newItemObject = { name: itemInput.value, isCompleted: false };
   Todos[boxIndex].items.push(newItemObject);
-  console.log("Item",Todos[boxIndex].items);
+  console.log("Item", Todos[boxIndex].items);
   renderItems();
-  if(singleTaskIndex!=-1)
-  {
+  if (singleTaskIndex != -1) {
     renderSingleItem();
   }
   ToggleItemModal();
@@ -141,17 +133,18 @@ function renderItems() {
     taskTitle.classList.add("taskTitle");
     taskCard.appendChild(taskTitle);
 
-    taskTitle.addEventListener("click", ()=>{
+    taskTitle.addEventListener("click", () => {
       ToggleSingleTaskModal();
       const container = document.getElementsByClassName("container")[0];
       // container.style.display = "none";
-      taskTitle.style.color="red";
+      taskTitle.style.color = "red";
       // singleTaskIndex = taskTitle.parentElement.id.innerText = Todos[singleTaskIndex].name;
       singleTaskIndex = taskTitle.parentElement.id;
       document.getElementById("single-task-name").innerText = Todos[singleTaskIndex].name;
       // document.getElementById("box").innerHTML = Todos[taskCard].name;
       console.log("index:", singleTaskIndex);
       renderSingleItem();
+      container.style.display = "none"
     });
 
     taskTitle.innerText = value.name;
@@ -161,14 +154,14 @@ function renderItems() {
     taskCard.appendChild(Hrline);
     const buttonContainer = document.createElement("div");
     buttonContainer.classList.add("buttonContainer");
-    buttonContainer.style.display="flex";
-    buttonContainer.style.justifyContent="end";
-    buttonContainer.style.margin="10px";
+    buttonContainer.style.display = "flex";
+    buttonContainer.style.justifyContent = "end";
+    buttonContainer.style.margin = "10px";
 
     // add
     const addBtn = document.createElement("img");
-    addBtn.style.width="40px";
-    addBtn.style.height="40px";
+    addBtn.style.width = "40px";
+    addBtn.style.height = "40px";
     addBtn.src = "./add_box_FILL1_wght400_GRAD0_opsz48.svg";
     addBtn.classList.add("plus-icon");
     addBtn.addEventListener("click", () => {
@@ -178,8 +171,8 @@ function renderItems() {
 
     // del
     const delBtn = document.createElement("img");
-    delBtn.style.width="40px";
-    delBtn.style.height="40px";
+    delBtn.style.width = "40px";
+    delBtn.style.height = "40px";
     delBtn.src = "./delete_FILL1_wght400_GRAD0_opsz48.svg";
     delBtn.classList.add("bin-icon");
 
@@ -187,15 +180,15 @@ function renderItems() {
       const delIndex = delBtn.parentElement.parentElement.id;
       removeValueAtIndex(delIndex);
       renderItems();
-      const modal=document.getElementById("single-task-modal");
-      modal.style.display="none";
+      const modal = document.getElementById("single-task-modal");
+      modal.style.display = "none";
     });
 
     buttonContainer.appendChild(delBtn);
     buttonContainer.appendChild(addBtn);
 
     const itemList = document.createElement("ul");
-    itemList.style.listStyleType="none";
+    itemList.style.listStyleType = "none";
     itemList.style.flex = "1";
     itemList.style.lineHeight = "35px";
 
@@ -204,11 +197,11 @@ function renderItems() {
       const markbtn = document.createElement("p");
       markbtn.innerText = "Mark done";
       markbtn.style.display = "inline";
-      markbtn.style.backgroundColor="blue";
-      markbtn.style.color="white";
-      markbtn.style.marginLeft="10px"
-      markbtn.style.borderRadius="10px"
-      markbtn.style.fontSize="13px"
+      markbtn.style.backgroundColor = "blue";
+      markbtn.style.color = "white";
+      markbtn.style.marginLeft = "10px"
+      markbtn.style.borderRadius = "10px"
+      markbtn.style.fontSize = "13px"
       markbtn.classList.add("markBtn");
 
       const item1 = document.createElement("li");
